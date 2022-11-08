@@ -55,7 +55,7 @@ function App() {
       </form>
       <section>
         <h1>Cores Favoritas</h1>
-        <div>
+        <div className='card'>
           {cores.map((cor, index) => {
             return <Card key={index} dataCor={cor} />;
           })}

@@ -12,6 +12,11 @@ body {
   background: #202020;
 }
 
+.card {
+  width: 250px;
+  height: 250px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
