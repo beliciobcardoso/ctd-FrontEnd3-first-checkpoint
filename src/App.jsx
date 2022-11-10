@@ -10,21 +10,37 @@ function App() {
   const [cor, setCor] = useState('');
   const [cores, setCores] = useState([]);
 
-  console.log(cor);
+  const [formularioErro, setFormularioErro] = useState(false);
+  const [inpuntNome, setInpuntNome] = useState(false);
+  const [inputCor, setInputCor] = useState(false);
+
+  console.log(nome);
 
   function cadastraCor(event) {
     event.preventDefault();
 
+    console.log(cor);
     const novaCor = {
-      nome: nome,
+      nome: nome.trim(),
       cor: cor,
     };
 
-    if (nome < 3) {
-      alert('Campo do nome vazio');
+    if (nome.length < 3 && cor.length < 6) {
+      setFormularioErro(true);
+      setInpuntNome(true);
+      setInputCor(true);
+    } else if (nome.length < 3) {
+      setFormularioErro(true);
+      setInpuntNome(true);
+      setInputCor(false);
     } else if (cor.length < 6) {
-      alert('Telefone é menor que o padrão');
+      setFormularioErro(true);
+      setInputCor(true);
+      setInpuntNome(false);
     } else {
+      setFormularioErro(false);
+      setInputCor(false);
+      setInpuntNome(false);
       setCores([...cores, novaCor]);
       setNome('');
       setCor('');
@@ -33,26 +49,31 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>Adicionar nova cor</h1>
-      <form>
-        <label htmlFor='nome'>Nome</label>
-        <Input
-          id='nome'
-          type='text'
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
-        />
-        <label htmlFor='cor'>Cor</label>
-        <Input
-          id='cor'
-          type='color'
-          value={cor}
-          onChange={(event) => setCor(event.target.value)}
-        />
+      <form className={formularioErro ? 'form-error' : ''}>
+        <h1>Adicionar nova cor</h1>
+        <div>
+          <label htmlFor='nome'>Nome</label>
+          <Input
+            id='nome'
+            type='text'
+            value={nome}
+            onChange={(event) => setNome(event.target.value)}
+          />
+
+          <label htmlFor='cor'>Cor</label>
+          <Input
+            id='cor'
+            type='color'
+            value={cor}
+            onChange={(event) => setCor(event.target.value)}
+          />
+        </div>
         <Button type='submit' onClick={(event) => cadastraCor(event)}>
           Adicionar
         </Button>
       </form>
+      <p className={inpuntNome ? 'inpuntNome-error' : ''}></p>
+      <p className={inputCor ? 'inputCor-error' : ''}></p>
       <section>
         <h1>Cores Favoritas</h1>
         <div className='card'>
